@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suraj Paul | AI & Secure IoT Developer</title>
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Configure Tailwind to use the Inter font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        :root {
+            --primary-bg: #030712; /* Slate-950 */
+            --secondary-bg: #111827; /* Gray-900 */
+            --accent-cyan: #06B6D4; /* Cyan-500 */
+            --accent-indigo: #6366F1; /* Indigo-500 */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-bg);
+            color: #D1D5DB; /* Gray-300 */
+            line-height: 1.6;
+            /* Ensure body is ready for fixed canvas positioning */
+            position: relative;
+            overflow-x: hidden; 
+        }
+        .header-bg {
+            /* Richer, more professional gradient */
+            background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
+            border-bottom: 4px solid var(--accent-cyan);
+            position: relative;
+            z-index: 10; /* Keep header above animation */
+        }
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            /* More vibrant gradient for the name */
+            background-image: linear-gradient(90deg, #F472B6, #8B5CF6, #06B6D4); 
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: var(--secondary-bg); 
+            /* Subtle glowing left border */
+            border-left: 4px solid var(--accent-cyan);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            position: relative; /* Essential to layer correctly */
+            z-index: 5;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            /* Soft, tech-y hover shadow */
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.4), 0 0 15px var(--accent-cyan); 
+            background-color: #1F2937; /* Slightly lighter on hover */
+        }
+        .skill-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.4rem 1rem;
+            margin: 0.3rem;
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            background-color: #374151; /* Gray-700 */
+            color: #F3F4F6; /* White text */
+            transition: background-color 0.3s, color 0.3s, transform 0.2s;
+            position: relative;
+            z-index: 5;
+        }
+        .skill-badge:hover {
+            background-color: var(--accent-indigo);
+            color: white;
+            transform: scale(1.05);
+        }
+        /* Style for the new animated canvas background */
+        #techBackground {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%; /* Will be overridden by JS for scroll height */
+            z-index: -10; /* Ensure it is behind ALL content */
+            opacity: 0.2; /* Keep the animation subtle */
+        }
+        /* Ensure main content blocks have a relative position and background to sit above the canvas */
+        main, footer, section {
+            position: relative;
+            z-index: 5; 
+        }
+        /* Explicitly set background on sections that should cover the canvas */
+        #about > div, #background > div {
+             background-color: #111827; /* Gray-900 */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- CANVAS ANIMATED BACKGROUND -->
+    <!-- This element is fixed and positioned behind all content -->
+    <canvas id="techBackground"></canvas>
+
+    <!-- Header & Hero Section --><header class="header-bg py-12 sm:py-20 shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- Responsive Container for Image and Text (Left Alignment) --><div class="flex flex-col md:flex-row items-center md:items-start md:space-x-10">
+                
+                <!-- Left Side: Profile Image --><div class="mb-8 md:mb-0 flex-shrink-0">
+                    <!-- Image path preserved as requested -->
+                    <img src="E:\Suraj_Portfolio\20314.jpg" 
+                        alt="Suraj Paul Profile Photo" 
+                        onerror="this.onerror=null; this.src='https://placehold.co/200x200/1F2937/D1D5DB?text=SP';"
+                        class="w-48 h-48 rounded-lg mx-auto object-contain bg-white ring-8 ring-cyan-500 shadow-2xl transition duration-300 transform hover:scale-105 hover:ring-indigo-400">
+                </div>
+
+                <!-- Right Side: Name, Title, and Action Buttons --><div class="md:text-left text-center flex-grow">
+                    <h1 class="text-6xl sm:text-7xl font-extrabold mb-2 tracking-tight">
+                        <span class="text-gradient">SURAJ PAUL</span>
+                    </h1>
+                    <p class="text-xl sm:text-3xl font-light text-indigo-200">
+                        AI, Computer Vision & Secure IoT Solutions Developer
+                    </p>
+                    <p class="text-lg text-indigo-100 mt-4 max-w-2xl md:max-w-full md:mx-0 mx-auto">
+                        Research-driven student turning complex theory into real-time, cryptographically secure systems.
+                    </p>
+
+                    <!-- Buttons Below Text --><div class="mt-8 flex justify-center md:justify-start space-x-4">
+                        <a href="#projects" class="px-8 py-3 bg-cyan-500 text-gray-900 font-bold rounded-lg shadow-xl hover:bg-cyan-400 transition duration-300 transform hover:scale-105">
+                            Explore My Work
+                        </a>
+                        <a href="#contact" class="px-8 py-3 border-2 border-indigo-300 text-indigo-100 font-bold rounded-lg hover:bg-indigo-700 transition duration-300 transform hover:scale-105">
+                            Get In Touch
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- End Responsive Container --></div>
+    </header>
+
+    <!-- Main Content Area --><main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20">
+
+        <!-- About Me Section --><section id="about" class="mb-24">
+            <h2 class="text-4xl font-extrabold mb-8 border-b-4 border-cyan-500 pb-3 text-white">About Me</h2>
+            <div class="text-xl leading-relaxed bg-gray-900 p-10 rounded-2xl shadow-inner shadow-cyan-900/50">
+                <p>A highly motivated and research-driven BCA (Honours with Research) student specializing in the practical application of Computer Vision, AI, and Secure IoT. I translate complex theoretical concepts into robust, real-world solutions.</p>
+                <p class="mt-6">My core expertise spans building end-to-end systems: from creating sophisticated recognition pipelines (FaceNet, OpenCV) to ensuring device security using modern ECC and AES-GCM cryptography. This dual focus on intelligent automation and uncompromised security defines my approach to development.</p>
+                <p class="mt-6 font-semibold text-cyan-400">Current Focus: My research focuses on developing intelligent, secure, and scalable systems that combine Artificial Intelligence, cybersecurity, and IoT hardware integration to create trustworthy and adaptive technologies for the future.</p>
+            </div>
+        </section>
+
+        <!-- Skills Section --><section id="skills" class="mb-24">
+            <h2 class="text-4xl font-extrabold mb-10 border-b-4 border-cyan-500 pb-3 text-white">Technical Expertise </h2>
+            <div class="flex flex-wrap justify-center sm:justify-start">
+                <span class="skill-badge"> Python Programming</span>
+                <span class="skill-badge"> Machine Learning</span>
+                <span class="skill-badge"> Computer Vision (FaceNet, OpenCV)</span>
+                <span class="skill-badge"> Cryptography (ECC, AES-GCM)</span>
+                <span class="skill-badge"> IoT</span>
+                <span class="skill-badge"> API Integration (Telegram, Firebase)</span>
+                <span class="skill-badge"> Data Analysis (Pandas)</span>
+                <span class="skill-badge"> Web Development (HTML, CSS, Node.js)</span>
+            </div>
+        </section>
+
+        <!-- Projects Section --><section id="projects" class="mb-24">
+            <h2 class="text-4xl font-extrabold mb-10 border-b-4 border-cyan-500 pb-3 text-white">Project Portfolio</h2>
+            <div class="grid md:grid-cols-2 gap-10">
+
+                <!-- Project 1: Attendance System --><div class="card p-8 rounded-xl shadow-2xl">
+                    <h3 class="text-3xl font-bold text-cyan-400 mb-3 flex items-center">
+                        <!-- Icon: Clipboard Check --><svg class="w-6 h-6 mr-3 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5l3-3m0 0v10"></path></svg>
+                        Automated Attendance Monitoring
+                    </h3>
+                    <p class="text-base text-gray-400 mb-5">A real-time, scalable attendance solution for academic institutions.</p>
+
+                    <p class="mb-5 text-gray-300">Implemented an automated system using real-time Face Recognition (MTCNN/FaceNet) for high-accuracy presence marking. Optimized for low-latency processing and includes a Telegram Bot for instant faculty notifications and an integrated analytics module for tracking attendance trends (daily, weekly, monthly).</p>
+
+                    <div class="mt-6">
+                        <span class="font-semibold text-indigo-300">Technologies Used:</span>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <span class="text-sm bg-gray-700 px-3 py-1 rounded-full">Python</span>
+                            <span class="text-sm bg-gray-700 px-3 py-1 rounded-full">FaceNet</span>
+                            <span class="text-sm bg-gray-700 px-3 py-1 rounded-full">OpenCV</span>
+                            <span class="text-sm bg-gray-700 px-3 py-1 rounded-full">Telegram API</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Identity Defenders --><div class="card p-8 rounded-xl shadow-2xl">
+                    <h3 class="text-3xl font-bold text-cyan-400 mb-3 flex items-center">
+                        <!-- Icon: Lock Closed --><svg class="w-6 h-6 mr-3 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        Identity Defenders (Secure AI)
+                    </h3>
+                    <p class="text-base text-gray-400 mb-5">AI-based security prototype with cryptographic protection for physical access control.</p>
+
+                    <p class="mb-5 text-gray-300">Features real-time face detection with webcam and Telegram alerts for unknown faces. The core innovation is the use of ECC + AES-GCM to simulate cryptographically secure ‘lock/unlock’ commands relayed to an ESP32 solenoid lock, demonstrating mastery in secure hardware communication.</p>
+
+                    <div class="mt-6">
+                        <span class="font-semibold text-indigo-300">Technologies Used:</span>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <span class="text-sm bg-gray-700 px-3 py-1 rounded-full">ECC/AES-GCM</span>
+                            <span class="text-sm bg-gray-700 px-3 py-1 rounded-full">ESP32</span>
+                            <span class="text-sm bg-gray-700 px-3 py-1 rounded-full">FaceNet</span>
+                            <span class="text-sm bg-gray-700 px-3 py-1 rounded-full">Python</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Smart Agriculture --><div class="card p-8 rounded-xl shadow-2xl md:col-span-2">
+                    <h3 class="text-3xl font-bold text-cyan-400 mb-3 flex items-center">
+                        <!-- Icon: Leaf --><svg class="w-6 h-6 mr-3 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                        Smart Agriculture Field System
+                    </h3>
+                    <p class="text-base text-gray-400 mb-5">An IoT solution for automated resource management and early plant health diagnostics.</p>
+
+                    <p class="mb-5 text-gray-300">This system provides automated smart irrigation and fertilizer control using an ESP32 and sensor network. Data is synchronized via Firebase. Includes remote control via voice commands and WhatsApp alerts. Currently integrating an AI module for plant disease detection (R&D focus).</p>
+
+                    <div class="mt-6">
+                        <span class="font-semibold text-indigo-300">Technologies Used:</span>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <span class="text-sm bg-gray-700 px-3 py-1 rounded-full">ESP32</span>
+                            <span class="text-sm bg-gray-700 px-3 py-1 rounded-full">Firebase</span>
+                            <span class="text-sm bg-gray-700 px-3 py-1 rounded-full">IoT Sensors</span>
+                            <span class="text-sm bg-gray-700 px-3 py-1 rounded-full">AI/ML (In Progress)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education and Interests Section --><section id="background" class="mb-24 grid md:grid-cols-2 gap-10">
+            <!-- Education --><div class="bg-gray-900 p-8 rounded-xl shadow-xl border-t-4 border-indigo-500">
+                <h3 class="text-3xl font-extrabold text-indigo-300 mb-4">Education</h3>
+                <p class="text-xl font-semibold text-white">Bachelor of Computer Applications (Honours with Research)</p>
+                <p class="text-gray-400 mt-1">Brainware University, Kolkata, India</p>
+                <p class="text-md text-cyan-400 mt-4">Expected Graduation: 2027</p>
+            </div>
+
+            <!-- Hobbies & Interests --><div class="bg-gray-900 p-8 rounded-xl shadow-xl border-t-4 border-indigo-500">
+                <h3 class="text-3xl font-extrabold text-indigo-300 mb-4">Interests</h3>
+                <ul class="list-disc list-inside space-y-2 text-lg text-gray-300">
+                    <li>Building Smart AI + IoT Systems (Integrated Solutions)</li>
+                    <li>Deep Diving into Cybersecurity & Encryption </li>
+                    <li>Developing Automation Bots (Efficiency focused)</li>
+                    <li>Exploring New Technologies (AI, Embedded Systems R&D)</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer / Contact Section --><footer id="contact" class="bg-gray-950 border-t border-cyan-800 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-extrabold text-cyan-400 mb-8">Let's Build the Future Together</h2>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-12 text-xl font-medium">
+                
+                <!-- Email Link --><a href="mailto:suryapaul713427@gmail.com" class="text-indigo-200 hover:text-cyan-400 transition duration-300 flex items-center justify-center group">
+                    <svg class="w-6 h-6 mr-3 text-indigo-400 group-hover:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-9 13H5a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2h-7"></path></svg>
+                    suryapaul713427@gmail.com
+                </a>
+                
+                <!-- Phone Link --><a href="tel:+917719338154" class="text-indigo-200 hover:text-cyan-400 transition duration-300 flex items-center justify-center group">
+                    <svg class="w-6 h-6 mr-3 text-indigo-400 group-hover:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5zm16 14l-4.229-4.229m0 0a1.5 1.5 0 00-2.122 0L10 16"></path></svg>
+                    +91 7719338154
+                </a>
+                
+                <!-- LinkedIn Link --><a href="https://linkedin.com/in/suraj-paul-949875284" target="_blank" class="text-indigo-200 hover:text-cyan-400 transition duration-300 flex items-center justify-center group">
+                    <svg class="w-6 h-6 mr-3 text-indigo-400 group-hover:text-cyan-400" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.98 3.5c0 1.381-1.11 2.5-2.481 2.5S0 4.881 0 3.5C0 2.12 1.11 1 2.5 1s2.48 1.12 2.48 2.5zM4.98 6H0v16h4.98V6zM19.1 19.5c0 3.016-1.92 4.14-4.81 4.14-2.3 0-3.41-.95-4.01-1.85V18h-.07s.07-.15.07-.35v-1.63c0-1.28.84-2.12 2.22-2.12 1.48 0 2.21 1.05 2.21 2.6V19.5h4.42c.03-.6.03-1.2.03-1.8 0-4.06-2.15-5.9-5.01-5.9-2.73 0-4.34 1.48-5.08 2.54V12.1H4.98c.07 1.48 0 8.01 0 8.01H.07V9.5h4.91v2.17c.56-.84 1.76-2.5 4.67-2.5 3.32 0 6.07 2.15 6.07 7.74v.09z"/></svg>
+                    LinkedIn Profile
+                </a>
+            </div>
+            <p class="mt-12 text-sm text-slate-500 tracking-wide">&copy; 2025 Suraj Paul — All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script>
+        // Existing JavaScript for smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // --- JAVASCRIPT FOR LIVE ANIMATION (Particle Network) ---
+
+        const canvas = document.getElementById('techBackground');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+        const particleCount = 70; // Adjust for density
+        const maxDistance = 120; // Max distance for connecting lines
+
+        /**
+         * Sets the canvas dimensions to match the browser window width 
+         * and the total scrollable height of the document body.
+         */
+        function setCanvasSize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = document.body.scrollHeight;
+        }
+
+        /**
+         * Class representing a single moving particle in the network.
+         */
+        class Particle {
+            constructor() {
+                // Initial position randomly across the canvas
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 2 + 0.5;
+                // Subtle, slow movement
+                this.vx = Math.random() * 0.5 - 0.25; 
+                this.vy = Math.random() * 0.5 - 0.25;
+                // Use the cyan accent color
+                this.color = '#06B6D4'; 
+            }
+
+            /**
+             * Updates the particle's position and handles boundary wrapping/reversal.
+             */
+            update() {
+                // Check boundary collisions and reverse velocity
+                if (this.x > width || this.x < 0) this.vx *= -1;
+                if (this.y > height || this.y < 0) this.vy *= -1;
+
+                this.x += this.vx;
+                this.y += this.vy;
+            }
+
+            /**
+             * Draws the particle dot on the canvas.
+             */
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        /**
+         * Initializes the particle array with the defined count.
+         */
+        function initParticles() {
+            particles = []; // Clear existing particles
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        /**
+         * Draws translucent lines between particles that are close to each other.
+         */
+        function connectParticles() {
+            let opacityValue = 1;
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a; b < particles.length; b++) {
+                    const dx = particles[a].x - particles[b].x;
+                    const dy = particles[a].y - particles[b].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < maxDistance) {
+                        // Calculate opacity based on distance: closer = more opaque, up to 0.5 max opacity
+                        opacityValue = 1 - (distance / maxDistance);
+                        ctx.strokeStyle = `rgba(6, 182, 212, ${opacityValue * 0.5})`; // Cyan-500
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        /**
+         * Main animation loop using requestAnimationFrame.
+         */
+        function animateBackground() {
+            // Clear the entire canvas for the next frame
+            ctx.clearRect(0, 0, width, height);
+
+            // Update and draw particles
+            for (const particle of particles) {
+                particle.update();
+                particle.draw();
+            }
+
+            // Draw connections
+            connectParticles();
+
+            requestAnimationFrame(animateBackground);
+        }
+
+        // Initialize and start on window load
+        window.onload = function() {
+            setCanvasSize();
+            initParticles();
+            animateBackground();
+        };
+
+        // Handle resizing: reset size and re-spread particles
+        window.addEventListener('resize', () => {
+             setCanvasSize();
+             initParticles(); 
+        });
+        
+        // Handle scroll: only adjust canvas height, not re-init particles
+        window.addEventListener('scroll', () => {
+             canvas.height = document.body.scrollHeight;
+        });
+
+    </script>
+</body>
+</html>
