@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Suraj Paul | AI & Secure IoT Developer</title>
-    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Configure Tailwind to use the Inter font */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
@@ -94,34 +94,32 @@
 </head>
 <body class="antialiased">
 
-    <!-- CANVAS ANIMATED BACKGROUND -->
-    <!-- This element is fixed and positioned behind all content -->
     <canvas id="techBackground"></canvas>
 
-    <!-- Header & Hero Section --><header class="header-bg py-12 sm:py-20 shadow-2xl">
+    <header class="header-bg py-12 sm:py-20 shadow-2xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            <!-- Responsive Container for Image and Text (Left Alignment) --><div class="flex flex-col md:flex-row items-center md:items-start md:space-x-10">
+            <div class="flex flex-col md:flex-row items-center md:items-start md:space-x-10">
                 
-                <!-- Left Side: Profile Image --><div class="mb-8 md:mb-0 flex-shrink-0">
-                    <!-- Image path preserved as requested -->
-                   <img src="assets/images/20314.jpg" 
-                     alt="Suraj Paul Profile Photo" 
-                     onerror="this.onerror=null; this.src='https://placehold.co/200x200/1F2937/D1D5DB?text=SP';"
-                     class="w-48 h-48 rounded-lg mx-auto object-contain bg-white ring-8 ring-cyan-500 shadow-2xl transition duration-300 transform hover:scale-105 hover:ring-indigo-400">
+                <div class="mb-8 md:mb-0 flex-shrink-0">
+                    <img src="https://lh3.googleusercontent.com/d/1_eQpscoVGxBrDATzmCv8rxMgiiA5cUiw" 
+                        alt="Suraj Paul Profile Photo" 
+                        onerror="this.onerror=null; this.src='https://placehold.co/200x200/1F2937/D1D5DB?text=SP';"
+                        class="max-w-xs h-auto w-full rounded-xl mx-auto object-cover bg-white ring-8 ring-cyan-500 shadow-2xl transition duration-300 transform hover:scale-105 hover:ring-indigo-400">
+                </div>
 
-                <!-- Right Side: Name, Title, and Action Buttons --><div class="md:text-left text-center flex-grow">
-                    <h1 class="text-6xl sm:text-7xl font-extrabold mb-2 tracking-tight">
+                <div class="md:text-left text-center flex-grow">
+                    <h1 class="text-6xl sm:text-7xl font-extrabold mb-2 tracking-tight md:text-left">
                         <span class="text-gradient">SURAJ PAUL</span>
                     </h1>
-                    <p class="text-xl sm:text-3xl font-light text-indigo-200">
+                    <p class="text-xl sm:text-3xl font-light text-indigo-200 md:text-left">
                         AI, Computer Vision & Secure IoT Solutions Developer
                     </p>
-                    <p class="text-lg text-indigo-100 mt-4 max-w-2xl md:max-w-full md:mx-0 mx-auto">
+                    <p class="text-lg text-indigo-100 mt-4 max-w-2xl md:max-w-full md:mx-0 mx-auto md:text-left">
                         Research-driven student turning complex theory into real-time, cryptographically secure systems.
                     </p>
 
-                    <!-- Buttons Below Text --><div class="mt-8 flex justify-center md:justify-start space-x-4">
+                    <div class="mt-8 flex justify-center md:justify-start space-x-4">
                         <a href="#projects" class="px-8 py-3 bg-cyan-500 text-gray-900 font-bold rounded-lg shadow-xl hover:bg-cyan-400 transition duration-300 transform hover:scale-105">
                             Explore My Work
                         </a>
@@ -131,12 +129,12 @@
                     </div>
                 </div>
             </div>
-            <!-- End Responsive Container --></div>
+            </div>
     </header>
 
-    <!-- Main Content Area --><main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20">
 
-        <!-- About Me Section --><section id="about" class="mb-24">
+        <section id="about" class="mb-24">
             <h2 class="text-4xl font-extrabold mb-8 border-b-4 border-cyan-500 pb-3 text-white">About Me</h2>
             <div class="text-xl leading-relaxed bg-gray-900 p-10 rounded-2xl shadow-inner shadow-cyan-900/50">
                 <p>A highly motivated and research-driven BCA (Honours with Research) student specializing in the practical application of Computer Vision, AI, and Secure IoT. I translate complex theoretical concepts into robust, real-world solutions.</p>
@@ -145,8 +143,8 @@
             </div>
         </section>
 
-        <!-- Skills Section --><section id="skills" class="mb-24">
-            <h2 class="text-4xl font-extrabold mb-10 border-b-4 border-cyan-500 pb-3 text-white">Technical Expertise </h2>
+        <section id="skills" class="mb-24">
+            <h2 class="text-4xl font-extrabold mb-10 border-b-4 border-cyan-500 pb-3 text-white">Technical Expertise </h2>
             <div class="flex flex-wrap justify-center sm:justify-start">
                 <span class="skill-badge"> Python Programming</span>
                 <span class="skill-badge"> Machine Learning</span>
@@ -159,13 +157,13 @@
             </div>
         </section>
 
-        <!-- Projects Section --><section id="projects" class="mb-24">
+        <section id="projects" class="mb-24">
             <h2 class="text-4xl font-extrabold mb-10 border-b-4 border-cyan-500 pb-3 text-white">Project Portfolio</h2>
             <div class="grid md:grid-cols-2 gap-10">
 
-                <!-- Project 1: Attendance System --><div class="card p-8 rounded-xl shadow-2xl">
+                <div class="card p-8 rounded-xl shadow-2xl">
                     <h3 class="text-3xl font-bold text-cyan-400 mb-3 flex items-center">
-                        <!-- Icon: Clipboard Check --><svg class="w-6 h-6 mr-3 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5l3-3m0 0v10"></path></svg>
+                        <svg class="w-6 h-6 mr-3 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5l3-3m0 0v10"></path></svg>
                         Automated Attendance Monitoring
                     </h3>
                     <p class="text-base text-gray-400 mb-5">A real-time, scalable attendance solution for academic institutions.</p>
@@ -183,9 +181,9 @@
                     </div>
                 </div>
 
-                <!-- Project 2: Identity Defenders --><div class="card p-8 rounded-xl shadow-2xl">
+                <div class="card p-8 rounded-xl shadow-2xl">
                     <h3 class="text-3xl font-bold text-cyan-400 mb-3 flex items-center">
-                        <!-- Icon: Lock Closed --><svg class="w-6 h-6 mr-3 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        <svg class="w-6 h-6 mr-3 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                         Identity Defenders (Secure AI)
                     </h3>
                     <p class="text-base text-gray-400 mb-5">AI-based security prototype with cryptographic protection for physical access control.</p>
@@ -203,9 +201,9 @@
                     </div>
                 </div>
 
-                <!-- Project 3: Smart Agriculture --><div class="card p-8 rounded-xl shadow-2xl md:col-span-2">
+                <div class="card p-8 rounded-xl shadow-2xl md:col-span-2">
                     <h3 class="text-3xl font-bold text-cyan-400 mb-3 flex items-center">
-                        <!-- Icon: Leaf --><svg class="w-6 h-6 mr-3 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                        <svg class="w-6 h-6 mr-3 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                         Smart Agriculture Field System
                     </h3>
                     <p class="text-base text-gray-400 mb-5">An IoT solution for automated resource management and early plant health diagnostics.</p>
@@ -225,15 +223,15 @@
             </div>
         </section>
 
-        <!-- Education and Interests Section --><section id="background" class="mb-24 grid md:grid-cols-2 gap-10">
-            <!-- Education --><div class="bg-gray-900 p-8 rounded-xl shadow-xl border-t-4 border-indigo-500">
+        <section id="background" class="mb-24 grid md:grid-cols-2 gap-10">
+            <div class="bg-gray-900 p-8 rounded-xl shadow-xl border-t-4 border-indigo-500">
                 <h3 class="text-3xl font-extrabold text-indigo-300 mb-4">Education</h3>
                 <p class="text-xl font-semibold text-white">Bachelor of Computer Applications (Honours with Research)</p>
                 <p class="text-gray-400 mt-1">Brainware University, Kolkata, India</p>
                 <p class="text-md text-cyan-400 mt-4">Expected Graduation: 2027</p>
             </div>
 
-            <!-- Hobbies & Interests --><div class="bg-gray-900 p-8 rounded-xl shadow-xl border-t-4 border-indigo-500">
+            <div class="bg-gray-900 p-8 rounded-xl shadow-xl border-t-4 border-indigo-500">
                 <h3 class="text-3xl font-extrabold text-indigo-300 mb-4">Interests</h3>
                 <ul class="list-disc list-inside space-y-2 text-lg text-gray-300">
                     <li>Building Smart AI + IoT Systems (Integrated Solutions)</li>
@@ -246,22 +244,22 @@
 
     </main>
 
-    <!-- Footer / Contact Section --><footer id="contact" class="bg-gray-950 border-t border-cyan-800 py-16">
+    <footer id="contact" class="bg-gray-950 border-t border-cyan-800 py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-4xl font-extrabold text-cyan-400 mb-8">Let's Build the Future Together</h2>
             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-12 text-xl font-medium">
                 
-                <!-- Email Link --><a href="mailto:suryapaul713427@gmail.com" class="text-indigo-200 hover:text-cyan-400 transition duration-300 flex items-center justify-center group">
+                <a href="mailto:suryapaul713427@gmail.com" class="text-indigo-200 hover:text-cyan-400 transition duration-300 flex items-center justify-center group">
                     <svg class="w-6 h-6 mr-3 text-indigo-400 group-hover:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-9 13H5a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2h-7"></path></svg>
                     suryapaul713427@gmail.com
                 </a>
                 
-                <!-- Phone Link --><a href="tel:+917719338154" class="text-indigo-200 hover:text-cyan-400 transition duration-300 flex items-center justify-center group">
+                <a href="tel:+917719338154" class="text-indigo-200 hover:text-cyan-400 transition duration-300 flex items-center justify-center group">
                     <svg class="w-6 h-6 mr-3 text-indigo-400 group-hover:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5zm16 14l-4.229-4.229m0 0a1.5 1.5 0 00-2.122 0L10 16"></path></svg>
                     +91 7719338154
                 </a>
                 
-                <!-- LinkedIn Link --><a href="https://linkedin.com/in/suraj-paul-949875284" target="_blank" class="text-indigo-200 hover:text-cyan-400 transition duration-300 flex items-center justify-center group">
+                <a href="https://linkedin.com/in/suraj-paul-949875284" target="_blank" class="text-indigo-200 hover:text-cyan-400 transition duration-300 flex items-center justify-center group">
                     <svg class="w-6 h-6 mr-3 text-indigo-400 group-hover:text-cyan-400" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.98 3.5c0 1.381-1.11 2.5-2.481 2.5S0 4.881 0 3.5C0 2.12 1.11 1 2.5 1s2.48 1.12 2.48 2.5zM4.98 6H0v16h4.98V6zM19.1 19.5c0 3.016-1.92 4.14-4.81 4.14-2.3 0-3.41-.95-4.01-1.85V18h-.07s.07-.15.07-.35v-1.63c0-1.28.84-2.12 2.22-2.12 1.48 0 2.21 1.05 2.21 2.6V19.5h4.42c.03-.6.03-1.2.03-1.8 0-4.06-2.15-5.9-5.01-5.9-2.73 0-4.34 1.48-5.08 2.54V12.1H4.98c.07 1.48 0 8.01 0 8.01H.07V9.5h4.91v2.17c.56-.84 1.76-2.5 4.67-2.5 3.32 0 6.07 2.15 6.07 7.74v.09z"/></svg>
                     LinkedIn Profile
                 </a>
@@ -413,6 +411,3 @@
     </script>
 </body>
 </html>
-
-
-
