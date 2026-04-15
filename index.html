@@ -53,7 +53,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Fixed Portrait Alignment - Full Visibility */
         .profile-container {
             display: flex;
             justify-content: center;
@@ -111,6 +110,9 @@
             color: var(--accent-cyan);
             text-transform: uppercase;
             letter-spacing: 1px;
+            margin-right: 4px;
+            margin-bottom: 4px;
+            display: inline-block;
         }
     </style>
 </head>
@@ -135,13 +137,13 @@
             </h1>
 
             <p class="text-xl md:text-2xl text-slate-400 font-medium max-w-3xl mb-12 leading-relaxed">
-                <span class="text-white"></span> Specializing in Machine Learning, Deep Learning, Computer Vision, and 
-                <span class="text-white"></span> Secure IoT through Research-Driven Engineering.
+                <span class="text-white">ML Lead</span> specializing in Deep Learning, Computer Vision, and 
+                <span class="text-white">Secure IoT</span> through Research-Driven Engineering.
             </p>
 
-         
+            
 
-            <a href="#projects" class="px-10 py-4 bg-cyan-500 text-slate-950 font-black rounded-2xl hover:bg-white transition-all shadow-xl shadow-cyan-500/20">
+            <a href="#experience" class="px-10 py-4 bg-cyan-500 text-slate-950 font-black rounded-2xl hover:bg-white transition-all shadow-xl shadow-cyan-500/20">
                 EXPLORE PORTFOLIO
             </a>
         </div>
@@ -155,53 +157,104 @@
                 <p class="text-slate-300 text-lg md:text-xl leading-relaxed">
                     I am a research-focused <span class="text-white font-bold">BCA (Honours with Research)</span> student and experienced <span class="text-cyan-400 font-bold">ML Lead</span>. My work sits at the intersection of Artificial Intelligence and hardware security, specializing in building end-to-end autonomous systems from the ground up.
                 </p>
-                <div class="mt-8 grid md:grid-cols-2 gap-6 text-sm text-slate-400">
-                    <div class="flex items-center gap-3">
-                        <span class="w-2 h-2 rounded-full bg-cyan-500"></span>
-                        Real-time Computer Vision pipelines
+            </div>
+        </section>
+
+        <section id="experience" class="mb-32">
+            <h2 class="mono text-cyan-500 text-sm mb-12 tracking-[0.4em] uppercase">02 Experience_Log</h2>
+            <div class="glass-panel p-10">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-6">
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-1">Machine Learning Lead</h3>
+                        <p class="text-cyan-400 font-bold mono text-lg">Vigilantia Praesidium Pvt. Ltd.</p>
                     </div>
-                    <div class="flex items-center gap-3">
-                        <span class="w-2 h-2 rounded-full bg-cyan-500"></span>
-                        ECC & AES-GCM secure IoT solutions
-                    </div>
+                    <div class="mt-2 md:mt-0 text-slate-500 font-bold mono">OCT 2025 — MAR 2026</div>
                 </div>
+
+                <div class="flex flex-wrap mb-8">
+                    <span class="tag">Python</span>
+                    <span class="tag">Deep Learning (CNN)</span>
+                    <span class="tag">FaceNet</span>
+                    <span class="tag">MTCNN</span>
+                    <span class="tag">OpenCV</span>
+                    <span class="tag">ESP32</span>
+                    <span class="tag">Firebase</span>
+                    <span class="tag">Telegram API</span>
+                    <span class="tag">ECC</span>
+                </div>
+
+                <ul class="space-y-3 text-slate-300 text-sm md:text-base leading-relaxed">
+                    <li class="flex items-start"><span class="text-cyan-500 mr-3 mt-1.5">▹</span>Led development of multiple AI-powered systems across domains including smart security, agriculture, and automation.</li>
+                    <li class="flex items-start"><span class="text-cyan-500 mr-3 mt-1.5">▹</span>Designed and trained deep learning models for face recognition, object detection, and behaviour analysis.</li>
+                    <li class="flex items-start"><span class="text-cyan-500 mr-3 mt-1.5">▹</span>Conducted Research & Development (R&D) to improve model accuracy, optimize performance, and explore innovative AI solutions.</li>
+                    <li class="flex items-start"><span class="text-cyan-500 mr-3 mt-1.5">▹</span>Built real-time computer vision pipelines using FaceNet, MTCNN, and OpenCV for practical deployment.</li>
+                    <li class="flex items-start"><span class="text-cyan-500 mr-3 mt-1.5">▹</span>Developed and deployed systems like smart home security, attendance monitoring, traffic analysis, and agriculture automation.</li>
+                    <li class="flex items-start"><span class="text-cyan-500 mr-3 mt-1.5">▹</span>Integrated IoT devices (ESP32) with AI models for real-world system interaction and control.</li>
+                    <li class="flex items-start"><span class="text-cyan-500 mr-3 mt-1.5">▹</span>Implemented secure communication using ECC and AES-GCM encryption in AI-based IoT systems.</li>
+                    <li class="flex items-start"><span class="text-cyan-500 mr-3 mt-1.5">▹</span>Integrated APIs (Telegram, Firebase) for real-time alerts, cloud storage, and monitoring.</li>
+                    <li class="flex items-start"><span class="text-cyan-500 mr-3 mt-1.5">▹</span>Optimized models for low-latency, real-time inference on laptops and edge devices.</li>
+                    <li class="flex items-start"><span class="text-cyan-500 mr-3 mt-1.5">▹</span>Collaborated with teams to convert research ideas into scalable, production-ready solutions.</li>
+                </ul>
             </div>
         </section>
 
         <section id="projects" class="mb-32">
-            <h2 class="mono text-cyan-500 text-sm mb-12 tracking-[0.4em] uppercase">02 Project_Inventory</h2>
-            <div class="grid md:grid-cols-2 gap-8">
+            <h2 class="mono text-cyan-500 text-sm mb-12 tracking-[0.4em] uppercase">03 Project_Inventory</h2>
+            <div class="grid grid-cols-1 gap-10">
                 
-                <div class="glass-panel p-8 group">
-                    <h3 class="text-2xl font-bold mb-4 group-hover:text-cyan-400 transition">Automated Attendance Analytics</h3>
-                    <p class="text-slate-400 text-sm mb-6">Multi-student facial detection using MTCNN and FaceNet. Features averaged embeddings for ultra-high accuracy and real-time Telegram faculty reporting.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">FaceNet</span>
+                <div class="glass-panel p-10 group">
+                    <div class="flex flex-col md:flex-row md:justify-between mb-4">
+                        <h3 class="text-2xl font-bold group-hover:text-cyan-400 transition">Automated Student Attendance Monitoring & Analytics</h3>
+                        <div class="mt-2 md:mt-0"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">FaceNet</span><span class="tag">MTCNN</span><span class="tag">Pandas</span><span class="tag">Telegram API</span></div>
                     </div>
+                    <ul class="space-y-2 text-slate-400 text-sm md:text-base">
+                        <li>• Implemented an automated attendance system using real-time face recognition to mark student presence with high accuracy.</li>
+                        <li>• Built the recognition pipeline using MTCNN for face detection and FaceNet embeddings for face recognition, enabling multi-student detection in a single frame.</li>
+                        <li>• Designed a CSV-based storage system for maintaining attendance logs locally, ensuring portability.</li>
+                        <li>• Integrated a Telegram bot to provide instant notifications to faculty and daily attendance reports.</li>
+                        <li>• Developed a system to handle multiple students simultaneously with averaged embeddings to reduce recognition errors.</li>
+                        <li>• Created an analytics module for insights, including daily, weekly, and monthly trends.</li>
+                        <li>• Optimized for low-latency processing on standard laptops for cost-effective deployment.</li>
+                    </ul>
                 </div>
 
-                <div class="glass-panel p-8 group">
-                    <h3 class="text-2xl font-bold mb-4 group-hover:text-cyan-400 transition">Identity Defenders</h3>
-                    <p class="text-slate-400 text-sm mb-6">AI-based security system utilizing ECC + AES-GCM encryption for secure messaging between a Python server and ESP32 hardware locks.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="tag">Cryptography</span><span class="tag">ESP32</span><span class="tag">IoT</span>
+                <div class="glass-panel p-10 group">
+                    <div class="flex flex-col md:flex-row md:justify-between mb-4">
+                        <h3 class="text-2xl font-bold group-hover:text-cyan-400 transition">Identity Defenders – AI Security System</h3>
+                        <div class="mt-2 md:mt-0"><span class="tag">ECC</span><span class="tag">AES-GCM</span><span class="tag">ESP32</span><span class="tag">FaceNet</span><span class="tag">Telegram API</span></div>
                     </div>
+                    <ul class="space-y-2 text-slate-400 text-sm md:text-base">
+                        <li>• Real-time face detection with webcam using FaceNet and MTCNN.</li>
+                        <li>• Automated alerts sent via Telegram when unknown faces are detected.</li>
+                        <li>• Simulated secure ‘lock/unlock’ messaging using ECC + AES-GCM cryptography.</li>
+                        <li>• ESP32-controlled solenoid lock for physical access protection.</li>
+                    </ul>
                 </div>
 
-                <div class="glass-panel p-8 group">
-                    <h3 class="text-2xl font-bold mb-4 group-hover:text-cyan-400 transition">Road Guard AI</h3>
-                    <p class="text-slate-400 text-sm mb-6">Collision avoidance and drowsiness detection using Eye Aspect Ratio (EAR) and YOLO object detection integrated with Arduino buzzer alerts.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="tag">Deep Learning</span><span class="tag">YOLO</span><span class="tag">CNN</span>
+                <div class="glass-panel p-10 group">
+                    <div class="flex flex-col md:flex-row md:justify-between mb-4">
+                        <h3 class="text-2xl font-bold group-hover:text-cyan-400 transition">Road Guard AI – Collision & Drowsiness Detection</h3>
+                        <div class="mt-2 md:mt-0"><span class="tag">Deep Learning</span><span class="tag">YOLO</span><span class="tag">CNN</span><span class="tag">Arduino</span><span class="tag">Ultrasonic Sensor</span></div>
                     </div>
+                    <ul class="space-y-2 text-slate-400 text-sm md:text-base">
+                        <li>• Real-time driver drowsiness detection using eye aspect ratio (EAR) and facial landmark analysis.</li>
+                        <li>• Smart collision avoidance using ultrasonic sensor for precise distance measurement.</li>
+                        <li>• Instant audio/buzzer alert when driver fatigue or close obstacles are detected.</li>
+                        <li>• AI-powered object detection for obstacle identification using YOLO.</li>
+                        <li>• Integrated microcontroller-based hardware alert mechanism for real-world deployment.</li>
+                    </ul>
                 </div>
 
-                <div class="glass-panel p-8 group">
-                    <h3 class="text-2xl font-bold mb-4 group-hover:text-cyan-400 transition">Smart Agriculture System</h3>
-                    <p class="text-slate-400 text-sm mb-6">IoT-based automated irrigation and fertilization with Firebase cloud sync. Current R&D includes AI plant disease detection.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="tag">Firebase</span><span class="tag">Automation</span><span class="tag">R&D</span>
+                <div class="glass-panel p-10 group">
+                    <div class="flex flex-col md:flex-row md:justify-between mb-4">
+                        <h3 class="text-2xl font-bold group-hover:text-cyan-400 transition">Smart Agriculture Field System</h3>
+                        <div class="mt-2 md:mt-0"><span class="tag">ESP32</span><span class="tag">Firebase</span><span class="tag">IoT Sensors</span><span class="tag">Python</span></div>
                     </div>
+                    <ul class="space-y-2 text-slate-400 text-sm md:text-base">
+                        <li>• Smart irrigation and fertilizer system with automated resource management.</li>
+                        <li>• Voice command and WhatsApp alert integration for remote monitoring.</li>
+                        <li>• AI-based plant disease detection module currently in R&D phase.</li>
+                    </ul>
                 </div>
 
             </div>
