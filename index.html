@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suraj Paul | ML Lead</title>
+    <title>Suraj Paul | ML Lead & AI Researcher</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
         
         :root {
-            --bg-dark: #020617;
+            --bg-dark: #030712;
             --accent-cyan: #22d3ee;
-            --accent-blue: #3b82f6;
+            --accent-indigo: #6366f1;
+            --accent-emerald: #10b981;
         }
 
         body {
@@ -22,52 +23,57 @@
             scroll-behavior: smooth;
         }
 
-        /* Technical Interactive Mesh */
-        #meshCanvas {
+        #tensorCanvas {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .ambient-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             z-index: -1;
-            opacity: 0.5;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 30%, rgba(3, 7, 18, 0.2) 0%, rgba(3, 7, 18, 0.88) 80%, rgba(3, 7, 18, 0.98) 100%);
         }
 
         .glass-panel {
-            background: rgba(15, 23, 42, 0.5);
-            backdrop-filter: blur(12px);
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 24px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .glass-panel:hover {
-            border-color: var(--accent-cyan);
-            background: rgba(15, 23, 42, 0.7);
-            transform: translateY(-8px);
-        }
-
-        .text-gradient {
-            background: linear-gradient(135deg, #22d3ee 0%, #818cf8 50%, #c084fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            border-color: rgba(34, 211, 238, 0.4);
+            background: rgba(15, 23, 42, 0.82);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 45px -10px rgba(34, 211, 238, 0.12);
         }
 
         .profile-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
         }
 
         .profile-frame {
             position: relative;
-            width: 300px;
-            height: 380px; 
-            padding: 4px;
-            background: linear-gradient(45deg, var(--accent-cyan), #6366f1);
+            width: 280px;
+            height: 350px; 
+            padding: 3px;
+            background: linear-gradient(135deg, var(--accent-cyan), #6366f1, #10b981);
             border-radius: 24px;
-            box-shadow: 0 0 50px rgba(34, 211, 238, 0.3);
+            box-shadow: 0 0 45px rgba(34, 211, 238, 0.22);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -77,291 +83,652 @@
             width: 100%;
             height: 100%;
             object-fit: cover; 
-            border-radius: 20px;
+            border-radius: 21px;
             background: #0f172a;
-        }
-
-        .contact-pill {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 20px;
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 99px;
-            font-size: 0.9rem;
-            transition: 0.3s;
-        }
-
-        .contact-pill:hover {
-            border-color: var(--accent-cyan);
-            background: rgba(34, 211, 238, 0.1);
-            color: var(--accent-cyan);
         }
 
         .mono { font-family: 'JetBrains Mono', monospace; }
 
         .tag {
-            font-size: 0.65rem;
-            font-weight: 800;
-            padding: 2px 8px;
-            border-radius: 4px;
-            background: rgba(34, 211, 238, 0.1);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(34, 211, 238, 0.08);
+            border: 1px solid rgba(34, 211, 238, 0.25);
             color: var(--accent-cyan);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-right: 4px;
-            margin-bottom: 4px;
+            letter-spacing: 0.5px;
             display: inline-block;
+        }
+
+        .name-glow {
+            text-shadow: 0 0 40px rgba(255, 255, 255, 0.18), 0 0 80px rgba(34, 211, 238, 0.12);
         }
     </style>
 </head>
 <body class="antialiased">
 
-    <canvas id="meshCanvas"></canvas>
+    <!-- 3D Neural Isometric Loop Canvas -->
+    <canvas id="tensorCanvas"></canvas>
+    <div class="ambient-overlay"></div>
 
-    <header class="relative pt-24 pb-16 px-6">
-        <div class="max-w-6xl mx-auto flex flex-col items-center text-center">
+    <!-- Header Section -->
+    <header class="relative pt-20 pb-16 px-6">
+        <div class="max-w-5xl mx-auto flex flex-col items-center text-center">
             
             <div class="profile-container">
                 <div class="profile-frame">
                     <img src="20314.jpg" 
                          alt="Suraj Paul" 
-                         onerror="this.onerror=null; this.src='https://via.placeholder.com/300x380/020617/22d3ee?text=Suraj+Paul';"
+                         onerror="this.onerror=null; this.src='https://via.placeholder.com/280x350/020617/22d3ee?text=Suraj+Paul';"
                          class="profile-img">
                 </div>
             </div>
 
-            <h1 class="text-6xl md:text-8xl font-black mb-6 tracking-tight">
-                SURAJ <span class="text-gradient">PAUL</span>
+            <!-- Full Name Rendered in Clean Solid White -->
+            <h1 class="text-6xl md:text-8xl font-black mb-6 tracking-tight text-white name-glow">
+                SURAJ PAUL
             </h1>
 
-            <p class="text-xl md:text-2xl text-slate-400 font-medium max-w-3xl mb-12 leading-relaxed">
-                <span class="text-white">ML Lead</span> specializing in Deep Learning, Computer Vision, and 
-                <span class="text-white">Secure IoT</span> through Research-Driven Engineering.
+            <p class="text-xl md:text-2xl text-slate-300 font-medium max-w-3xl mb-10 leading-relaxed">
+                <span class="text-white font-semibold">Machine Learning Lead</span> & AI Researcher specializing in 
+                <span class="text-cyan-400">Deep Learning, Computer Vision</span>, and hardware-secured autonomous systems.
             </p>
 
-            
-
-            <a href="#experience" class="px-10 py-4 bg-cyan-500 text-slate-950 font-black rounded-2xl hover:bg-white transition-all shadow-xl shadow-cyan-500/20">
-                EXPLORE PORTFOLIO
-            </a>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#experience" class="px-8 py-3.5 bg-cyan-500 text-slate-950 font-bold rounded-xl hover:bg-cyan-400 transition-all shadow-lg shadow-cyan-500/20 text-sm mono">
+                    VIEW EXPERIENCE
+                </a>
+                <a href="#projects" class="px-8 py-3.5 bg-slate-800/80 border border-slate-700 text-slate-200 font-bold rounded-xl hover:bg-slate-700 transition-all text-sm mono">
+                    EXPLORE PROJECTS
+                </a>
+            </div>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-6 py-20">
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-6 space-y-28 pb-28">
         
-        <section id="about" class="mb-32">
-            <h2 class="mono text-cyan-500 text-sm mb-12 tracking-[0.4em] uppercase">01 Profile_Brief</h2>
-            <div class="glass-panel p-10">
-                <p class="text-slate-300 text-lg md:text-xl leading-relaxed">
-                    I am a research-focused <span class="text-white font-bold">BCA (Honours with Research)</span> student and experienced <span class="text-cyan-400 font-bold">ML Lead</span>. My work sits at the intersection of Artificial Intelligence and hardware security, specializing in building end-to-end autonomous systems from the ground up.
-                </p>
+        <!-- Profile & Education -->
+        <section id="about">
+            <h2 class="mono text-cyan-400 text-xs mb-8 tracking-[0.35em] uppercase font-bold">01 // Profile & Education</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-panel p-8 md:col-span-2">
+                    <h3 class="text-xl font-bold text-white mb-3">Executive Summary</h3>
+                    <p class="text-slate-300 leading-relaxed text-sm md:text-base">
+                        Research-driven <span class="text-white font-semibold">BCA (Hons. with Research)</span> scholar with an applied track record in neural architectures, deep learning pipelines, and edge computing. Proven experience taking computer vision systems from experimental R&D to real-world industrial and embedded deployments.
+                    </p>
+                </div>
+                <div class="glass-panel p-8">
+                    <p class="mono text-xs text-cyan-400 font-semibold uppercase tracking-wider mb-2">Academic Record</p>
+                    <h4 class="text-white font-bold text-base">Brainware University</h4>
+                    <p class="text-slate-300 text-sm mt-1">BCA (Honours with Research)</p>
+                    <div class="mt-4 pt-4 border-t border-white/5 space-y-1">
+                        <p class="text-xs text-slate-400">Current CGPA: <span class="text-cyan-300 font-bold mono">9.20</span></p>
+                        <p class="text-xs text-slate-400">Expected Graduation: <span class="text-slate-200 mono">2027</span></p>
+                        <p class="text-xs text-slate-500">Kolkata, India</p>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section id="experience" class="mb-32">
-            <h2 class="mono text-cyan-500 text-sm mb-12 tracking-[0.4em] uppercase">02 Experience_Log</h2>
-            <div class="glass-panel p-10">
-                <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-6">
-                    <div>
-                        <h3 class="text-2xl font-bold text-white mb-1">Machine Learning Lead</h3>
-                        <p class="text-cyan-400 font-bold mono text-lg">Vigilantia Praesidium Pvt. Ltd.</p>
+        <!-- Technical Stack -->
+        <section id="skills">
+            <h2 class="mono text-cyan-400 text-xs mb-8 tracking-[0.35em] uppercase font-bold">02 // Technical Stack</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
+                <div class="glass-panel p-6">
+                    <h3 class="mono text-xs uppercase tracking-wider text-cyan-400 font-bold mb-4">Core & ML</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tag">Python</span>
+                        <span class="tag">TensorFlow</span>
+                        <span class="tag">PyTorch</span>
+                        <span class="tag">Scikit-Learn</span>
+                        <span class="tag">Pandas</span>
                     </div>
-                    <div class="mt-2 md:mt-0 text-slate-500 font-bold mono">OCT 2025 — MAR 2026</div>
                 </div>
 
-                <div class="flex flex-wrap mb-8">
-                    <span class="tag">Python</span>
-                    <span class="tag">Deep Learning (CNN)</span>
+                <div class="glass-panel p-6">
+                    <h3 class="mono text-xs uppercase tracking-wider text-cyan-400 font-bold mb-4">Computer Vision</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tag">OpenCV</span>
+                        <span class="tag">YOLOv8</span>
+                        <span class="tag">FaceNet</span>
+                        <span class="tag">MTCNN</span>
+                        <span class="tag">MediaPipe</span>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6">
+                    <h3 class="mono text-xs uppercase tracking-wider text-cyan-400 font-bold mb-4">Embedded & Security</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tag">ESP32</span>
+                        <span class="tag">IoT Protocols</span>
+                        <span class="tag">ECC</span>
+                        <span class="tag">AES-GCM</span>
+                        <span class="tag">Firebase</span>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6">
+                    <h3 class="mono text-xs uppercase tracking-wider text-cyan-400 font-bold mb-4">Web & Workflow</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tag">Streamlit</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">DBMS</span>
+                        <span class="tag">Telegram API</span>
+                        <span class="tag">HTML/CSS</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Professional Experience -->
+        <section id="experience">
+            <h2 class="mono text-cyan-400 text-xs mb-8 tracking-[0.35em] uppercase font-bold">03 // Experience Log</h2>
+            <div class="glass-panel p-8 md:p-10">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-6">
+                    <div>
+                        <h3 class="text-2xl font-bold text-white">Machine Learning Lead <span class="text-slate-400 text-sm font-normal">(Internship)</span></h3>
+                        <p class="text-cyan-400 font-semibold mono text-base mt-1">Vigilantia Praesidium Pvt. Ltd.</p>
+                    </div>
+                    <div class="mt-2 md:mt-0 text-slate-400 font-semibold mono text-xs px-3 py-1 rounded bg-slate-800 border border-slate-700">
+                        16 OCT 2025 — 15 APR 2026
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <span class="tag">YOLOv8</span>
+                    <span class="tag">Streamlit</span>
                     <span class="tag">FaceNet</span>
                     <span class="tag">MTCNN</span>
-                    <span class="tag">OpenCV</span>
                     <span class="tag">ESP32</span>
-                    <span class="tag">Firebase</span>
-                    <span class="tag">Telegram API</span>
-                    <span class="tag">ECC</span>
+                    <span class="tag">ECC Cryptography</span>
+                    <span class="tag">OpenCV</span>
                 </div>
 
                 <ul class="space-y-3 text-slate-300 text-sm md:text-base leading-relaxed">
-                    <li class="flex items-start"><span class="text-cyan-500 mr-3 mt-1.5">▹</span>Led development of multiple AI-powered systems across domains including smart security, agriculture, and automation.</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-3 mt-1.5">▹</span>Designed and trained deep learning models for face recognition, object detection, and behaviour analysis.</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-3 mt-1.5">▹</span>Conducted Research & Development (R&D) to improve model accuracy, optimize performance, and explore innovative AI solutions.</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-3 mt-1.5">▹</span>Built real-time computer vision pipelines using FaceNet, MTCNN, and OpenCV for practical deployment.</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-3 mt-1.5">▹</span>Developed and deployed systems like smart home security, attendance monitoring, traffic analysis, and agriculture automation.</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-3 mt-1.5">▹</span>Integrated IoT devices (ESP32) with AI models for real-world system interaction and control.</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-3 mt-1.5">▹</span>Implemented secure communication using ECC and AES-GCM encryption in AI-based IoT systems.</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-3 mt-1.5">▹</span>Integrated APIs (Telegram, Firebase) for real-time alerts, cloud storage, and monitoring.</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-3 mt-1.5">▹</span>Optimized models for low-latency, real-time inference on laptops and edge devices.</li>
-                    <li class="flex items-start"><span class="text-cyan-500 mr-3 mt-1.5">▹</span>Collaborated with teams to convert research ideas into scalable, production-ready solutions.</li>
+                    <li class="flex items-start">
+                        <span class="text-cyan-400 mr-3 mt-1.5 text-xs">◆</span>
+                        <span>Architected and delivered the <strong>Smart AI Saree Counting System</strong>, training custom YOLOv8 models to automate physical textile inventory tracking in real time via an interactive interface.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-cyan-400 mr-3 mt-1.5 text-xs">◆</span>
+                        <span>Engineered real-time computer vision pipelines for facial verification and identification utilizing FaceNet and MTCNN with frame-averaged embeddings.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-cyan-400 mr-3 mt-1.5 text-xs">◆</span>
+                        <span>Pioneered hardware-level security integrations by coupling deep learning outputs to ESP32 microcontrollers through elliptic curve cryptography (ECC) and AES-GCM secure messaging.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-cyan-400 mr-3 mt-1.5 text-xs">◆</span>
+                        <span>Benchmarked and pruned computer vision models to enable sub-50ms inference latency across standard workstations and edge devices.</span>
+                    </li>
                 </ul>
             </div>
         </section>
 
-        <section id="projects" class="mb-32">
-            <h2 class="mono text-cyan-500 text-sm mb-12 tracking-[0.4em] uppercase">03 Project_Inventory</h2>
-            <div class="grid grid-cols-1 gap-10">
+        <!-- Project Inventory -->
+        <section id="projects">
+            <h2 class="mono text-cyan-400 text-xs mb-8 tracking-[0.35em] uppercase font-bold">04 // Project Inventory</h2>
+            <div class="grid grid-cols-1 gap-8">
                 
-                <div class="glass-panel p-10 group">
-                    <div class="flex flex-col md:flex-row md:justify-between mb-4">
-                        <h3 class="text-2xl font-bold group-hover:text-cyan-400 transition">Automated Student Attendance Monitoring & Analytics</h3>
-                        <div class="mt-2 md:mt-0"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">FaceNet</span><span class="tag">MTCNN</span><span class="tag">Pandas</span><span class="tag">Telegram API</span></div>
+                <!-- Saree Counter -->
+                <div class="glass-panel p-8 group">
+                    <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                        <div>
+                            <span class="mono text-[11px] text-cyan-400 tracking-wider uppercase font-semibold">Industrial Computer Vision</span>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-cyan-300 transition mt-1">Smart AI Saree Counting System</h3>
+                        </div>
+                        <div class="mt-3 md:mt-0 flex flex-wrap gap-1.5">
+                            <span class="tag">YOLOv8</span>
+                            <span class="tag">Streamlit</span>
+                            <span class="tag">OpenCV</span>
+                            <span class="tag">Python</span>
+                        </div>
                     </div>
-                    <ul class="space-y-2 text-slate-400 text-sm md:text-base">
-                        <li>• Implemented an automated attendance system using real-time face recognition to mark student presence with high accuracy.</li>
-                        <li>• Built the recognition pipeline using MTCNN for face detection and FaceNet embeddings for face recognition, enabling multi-student detection in a single frame.</li>
-                        <li>• Designed a CSV-based storage system for maintaining attendance logs locally, ensuring portability.</li>
-                        <li>• Integrated a Telegram bot to provide instant notifications to faculty and daily attendance reports.</li>
-                        <li>• Developed a system to handle multiple students simultaneously with averaged embeddings to reduce recognition errors.</li>
-                        <li>• Created an analytics module for insights, including daily, weekly, and monthly trends.</li>
-                        <li>• Optimized for low-latency processing on standard laptops for cost-effective deployment.</li>
+                    <p class="text-slate-300 text-sm md:text-base leading-relaxed mb-4">
+                        Engineered an end-to-end automated inventory inspection application for textile logistics. Trained custom object detection models capable of identifying overlapping fabric patterns and counting stored units accurately under challenging industrial lighting.
+                    </p>
+                    <ul class="text-slate-400 text-sm space-y-1.5 list-disc list-inside">
+                        <li>Built an interactive Streamlit UI providing live feed visualization, dynamic threshold tuning, and exportable counts.</li>
+                        <li>Optimized bounding box non-maximum suppression (NMS) to eliminate multi-detection errors on stacked garments.</li>
                     </ul>
                 </div>
 
-                <div class="glass-panel p-10 group">
-                    <div class="flex flex-col md:flex-row md:justify-between mb-4">
-                        <h3 class="text-2xl font-bold group-hover:text-cyan-400 transition">Identity Defenders – AI Security System</h3>
-                        <div class="mt-2 md:mt-0"><span class="tag">ECC</span><span class="tag">AES-GCM</span><span class="tag">ESP32</span><span class="tag">FaceNet</span><span class="tag">Telegram API</span></div>
+                <!-- Gym Posture AI -->
+                <div class="glass-panel p-8 group">
+                    <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                        <div>
+                            <span class="mono text-[11px] text-emerald-400 tracking-wider uppercase font-semibold">Kinematics & Pose Estimation</span>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-emerald-300 transition mt-1">Gym Posture Analysis & Fitness Assistant</h3>
+                        </div>
+                        <div class="mt-3 md:mt-0 flex flex-wrap gap-1.5">
+                            <span class="tag">MediaPipe</span>
+                            <span class="tag">OpenCV</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Kinematics</span>
+                        </div>
                     </div>
-                    <ul class="space-y-2 text-slate-400 text-sm md:text-base">
-                        <li>• Real-time face detection with webcam using FaceNet and MTCNN.</li>
-                        <li>• Automated alerts sent via Telegram when unknown faces are detected.</li>
-                        <li>• Simulated secure ‘lock/unlock’ messaging using ECC + AES-GCM cryptography.</li>
-                        <li>• ESP32-controlled solenoid lock for physical access protection.</li>
+                    <p class="text-slate-300 text-sm md:text-base leading-relaxed mb-4">
+                        Developed an edge vision system tracking joint angles across heavy compounds (squats, bench press, deadlifts) to identify form degradation in real time.
+                    </p>
+                    <ul class="text-slate-400 text-sm space-y-1.5 list-disc list-inside">
+                        <li>Audio-visual warnings fire immediately when anatomical angles deviate beyond safe mechanical thresholds.</li>
+                        <li>Equipped with kinematic review logs and rule-based hypertrophy workout and macronutrient suggestions.</li>
                     </ul>
                 </div>
 
-                <div class="glass-panel p-10 group">
-                    <div class="flex flex-col md:flex-row md:justify-between mb-4">
-                        <h3 class="text-2xl font-bold group-hover:text-cyan-400 transition">Road Guard AI – Collision & Drowsiness Detection</h3>
-                        <div class="mt-2 md:mt-0"><span class="tag">Deep Learning</span><span class="tag">YOLO</span><span class="tag">CNN</span><span class="tag">Arduino</span><span class="tag">Ultrasonic Sensor</span></div>
+                <!-- Identity Defenders -->
+                <div class="glass-panel p-8 group">
+                    <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                        <div>
+                            <span class="mono text-[11px] text-cyan-400 tracking-wider uppercase font-semibold">AI & Cryptography</span>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-cyan-300 transition mt-1">Identity Defenders – Secured AI Access Control</h3>
+                        </div>
+                        <div class="mt-3 md:mt-0 flex flex-wrap gap-1.5">
+                            <span class="tag">FaceNet</span>
+                            <span class="tag">MTCNN</span>
+                            <span class="tag">ESP32</span>
+                            <span class="tag">ECC</span>
+                            <span class="tag">AES-GCM</span>
+                        </div>
                     </div>
-                    <ul class="space-y-2 text-slate-400 text-sm md:text-base">
-                        <li>• Real-time driver drowsiness detection using eye aspect ratio (EAR) and facial landmark analysis.</li>
-                        <li>• Smart collision avoidance using ultrasonic sensor for precise distance measurement.</li>
-                        <li>• Instant audio/buzzer alert when driver fatigue or close obstacles are detected.</li>
-                        <li>• AI-powered object detection for obstacle identification using YOLO.</li>
-                        <li>• Integrated microcontroller-based hardware alert mechanism for real-world deployment.</li>
+                    <p class="text-slate-300 text-sm md:text-base leading-relaxed mb-4">
+                        Designed an access control infrastructure linking facial biometric authentication directly to physical solenoid locks over an encrypted bus.
+                    </p>
+                    <ul class="text-slate-400 text-sm space-y-1.5 list-disc list-inside">
+                        <li>Validates user identity via FaceNet embeddings, triggering Telegram security alerts with image captures on intruders.</li>
+                        <li>Transmits cryptographically signed (ECC + AES-GCM) unlock pulses to prevent hardware interception.</li>
                     </ul>
                 </div>
 
-                <div class="glass-panel p-10 group">
-                    <div class="flex flex-col md:flex-row md:justify-between mb-4">
-                        <h3 class="text-2xl font-bold group-hover:text-cyan-400 transition">Smart Agriculture Field System</h3>
-                        <div class="mt-2 md:mt-0"><span class="tag">ESP32</span><span class="tag">Firebase</span><span class="tag">IoT Sensors</span><span class="tag">Python</span></div>
+                <!-- Attendance System -->
+                <div class="glass-panel p-8 group">
+                    <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                        <div>
+                            <span class="mono text-[11px] text-cyan-400 tracking-wider uppercase font-semibold">Edge Recognition</span>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-cyan-300 transition mt-1">Automated Student Attendance & Analytics</h3>
+                        </div>
+                        <div class="mt-3 md:mt-0 flex flex-wrap gap-1.5">
+                            <span class="tag">FaceNet</span>
+                            <span class="tag">OpenCV</span>
+                            <span class="tag">Pandas</span>
+                            <span class="tag">Telegram Bot</span>
+                        </div>
                     </div>
-                    <ul class="space-y-2 text-slate-400 text-sm md:text-base">
-                        <li>• Smart irrigation and fertilizer system with automated resource management.</li>
-                        <li>• Voice command and WhatsApp alert integration for remote monitoring.</li>
-                        <li>• AI-based plant disease detection module currently in R&D phase.</li>
+                    <p class="text-slate-300 text-sm md:text-base leading-relaxed mb-4">
+                        Built a multi-target facial recognition attendance logging system running concurrently on commodity hardware with automated reporting.
+                    </p>
+                    <ul class="text-slate-400 text-sm space-y-1.5 list-disc list-inside">
+                        <li>Handles simultaneous multi-student detection with temporal embedding averaging to minimize false rejections.</li>
+                        <li>Automates daily/weekly statistical attendance report generation transmitted directly to faculty Telegram channels.</li>
+                    </ul>
+                </div>
+
+                <!-- Road Guard AI -->
+                <div class="glass-panel p-8 group">
+                    <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                        <div>
+                            <span class="mono text-[11px] text-cyan-400 tracking-wider uppercase font-semibold">ADAS & Safety</span>
+                            <h3 class="text-2xl font-bold text-white group-hover:text-cyan-300 transition mt-1">Road Guard AI – Drowsiness & Collision Avoidance</h3>
+                        </div>
+                        <div class="mt-3 md:mt-0 flex flex-wrap gap-1.5">
+                            <span class="tag">YOLO</span>
+                            <span class="tag">EAR Metric</span>
+                            <span class="tag">Arduino</span>
+                            <span class="tag">Ultrasonic</span>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 text-sm md:text-base leading-relaxed mb-4">
+                        Engineered a vehicular coprocessor monitoring operator alertness via Eye Aspect Ratio (EAR) metrics alongside forward-facing obstacle ranging.
+                    </p>
+                    <ul class="text-slate-400 text-sm space-y-1.5 list-disc list-inside">
+                        <li>Triggers low-latency physical buzzer alarms when sustained eyelid closure or head drooping is detected.</li>
+                        <li>Integrates forward ultrasonic telemetry and object bounding boxes for proactive collision warnings.</li>
                     </ul>
                 </div>
 
             </div>
         </section>
+
+        <!-- Focus Areas -->
+        <section id="hobbies">
+            <h2 class="mono text-cyan-400 text-xs mb-8 tracking-[0.35em] uppercase font-bold">05 // Focus Areas & Interests</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-panel p-8">
+                    <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-300 font-bold mb-4 mono text-sm">
+                        01
+                    </div>
+                    <h3 class="text-white font-bold text-lg mb-2">Smart IoT Systems</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Architecting full-stack hardware-to-cloud automated systems integrating microcontrollers (ESP32/Arduino) with on-device computer vision.
+                    </p>
+                </div>
+
+                <div class="glass-panel p-8">
+                    <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-300 font-bold mb-4 mono text-sm">
+                        02
+                    </div>
+                    <h3 class="text-white font-bold text-lg mb-2">Automation & Bots</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Writing bespoke background automation engines, webhooks, and intelligent Telegram bots for alerting, metrics harvesting, and reporting.
+                    </p>
+                </div>
+
+                <div class="glass-panel p-8">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-300 font-bold mb-4 mono text-sm">
+                        03
+                    </div>
+                    <h3 class="text-white font-bold text-lg mb-2">Applied Biomechanics</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Analyzing hypertrophy kinetics, strength training mechanics, and nutrition science to build intelligent vision tools for form correction.
+                    </p>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <footer id="contact" class="py-24 border-t border-white/5 bg-slate-950/30">
+    <!-- Footer Contact -->
+    <footer id="contact" class="py-20 border-t border-white/5 bg-slate-950/70">
         <div class="max-w-4xl mx-auto text-center px-6">
-            <h2 class="text-4xl font-black mb-8 text-white">Let's Build the Future</h2>
+            <h2 class="text-3xl md:text-5xl font-black mb-4 text-white">Let's Connect</h2>
+            <p class="text-slate-400 text-sm md:text-base mb-12">Open to ML engineering discussions, research collaborations, and production deployments.</p>
             
-            <div class="grid md:grid-cols-3 gap-8 text-slate-400 mb-16">
-                <div class="glass-panel p-6">
-                    <p class="text-xs uppercase mono mb-2 tracking-widest text-cyan-500">Email</p>
-                    <a href="mailto:suryapaul713427@gmail.com" class="text-white hover:text-cyan-400 transition">suryapaul713427@gmail.com</a>
+            <div class="grid md:grid-cols-3 gap-6 text-slate-400 mb-16">
+                <div class="glass-panel p-6 text-left">
+                    <p class="text-xs uppercase mono mb-1 text-cyan-400">Email</p>
+                    <a href="mailto:suryapaul713427@gmail.com" class="text-white text-sm hover:text-cyan-300 transition break-all">suryapaul713427@gmail.com</a>
                 </div>
-                <div class="glass-panel p-6">
-                    <p class="text-xs uppercase mono mb-2 tracking-widest text-cyan-500">Phone</p>
-                    <a href="tel:+917719338154" class="text-white hover:text-cyan-400 transition">+91 7719338154</a>
+                <div class="glass-panel p-6 text-left">
+                    <p class="text-xs uppercase mono mb-1 text-cyan-400">Phone</p>
+                    <a href="tel:+917719338154" class="text-white text-sm hover:text-cyan-300 transition">+91 7719338154</a>
                 </div>
-                <div class="glass-panel p-6">
-                    <p class="text-xs uppercase mono mb-2 tracking-widest text-cyan-500">LinkedIn</p>
-                    <a href="https://linkedin.com/in/suraj-paul-949875284" target="_blank" class="text-white hover:text-cyan-400 transition">Suraj Paul</a>
+                <div class="glass-panel p-6 text-left">
+                    <p class="text-xs uppercase mono mb-1 text-cyan-400">LinkedIn</p>
+                    <a href="https://linkedin.com/in/suraj-paul-949875284" target="_blank" class="text-white text-sm hover:text-cyan-300 transition">Suraj Paul</a>
                 </div>
             </div>
             
-            <p class="mono text-[10px] text-slate-700 tracking-[0.5em] uppercase">© Suraj Paul</p>
+            <p class="mono text-xs text-slate-600 tracking-widest uppercase">© Suraj Paul — Engineered for Deep Learning & Performance</p>
         </div>
     </footer>
 
+    <!-- 3D Neural Isometric Loop Engine -->
     <script>
-        const canvas = document.getElementById('meshCanvas');
+        const canvas = document.getElementById('tensorCanvas');
         const ctx = canvas.getContext('2d');
-        let points = [];
-        const count = 120;
-        const minDistance = 180;
-        let mouse = { x: null, y: null };
 
-        function init() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            points = [];
-            for (let i = 0; i < count; i++) {
-                points.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.4,
-                    vy: (Math.random() - 0.5) * 0.4,
-                    size: Math.random() * 1.5 + 0.5
+        let width, height, centerX, centerY;
+        let time = 0;
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            centerX = width * 0.5;
+            centerY = height * 0.45;
+        }
+
+        // Isometric projection matrix (True 30° / 60° transformation)
+        function projectIso(x, y, z) {
+            const isoX = (x - y) * Math.cos(Math.PI / 6);
+            const isoY = (x + y) * Math.sin(Math.PI / 6) - z;
+            return {
+                x: centerX + isoX,
+                y: centerY + isoY
+            };
+        }
+
+        // Neural Architecture Setup (Layers along 3D X-axis)
+        const layers = [
+            { count: 4, x: -320, color: '34, 211, 238' },    // Input Layer (Cyan)
+            { count: 6, x: -140, color: '99, 102, 241' },   // Hidden 1 (Indigo)
+            { count: 5, x: 60,   color: '129, 140, 248' },   // Hidden 2 / Tensor (Lavender)
+            { count: 3, x: 260,  color: '16, 185, 129' }     // Latent Output (Emerald)
+        ];
+
+        let nodes = [];
+        let synapses = [];
+        let pulses = [];
+
+        function buildNeuralSystem() {
+            nodes = [];
+            synapses = [];
+            pulses = [];
+
+            layers.forEach((layer, layerIdx) => {
+                const spacingY = 90;
+                const startY = -((layer.count - 1) * spacingY) / 2;
+
+                for (let i = 0; i < layer.count; i++) {
+                    const node = {
+                        id: `${layerIdx}-${i}`,
+                        layer: layerIdx,
+                        baseX: layer.x,
+                        baseY: startY + i * spacingY,
+                        baseZ: 0,
+                        radius: layerIdx === 0 || layerIdx === 3 ? 4.5 : 3.5,
+                        color: layer.color,
+                        phase: Math.random() * Math.PI * 2
+                    };
+                    nodes.push(node);
+                }
+            });
+
+            // Connect sequential layers
+            for (let l = 0; l < layers.length - 1; l++) {
+                const sourceNodes = nodes.filter(n => n.layer === l);
+                const targetNodes = nodes.filter(n => n.layer === l + 1);
+
+                sourceNodes.forEach(src => {
+                    targetNodes.forEach(tgt => {
+                        synapses.push({
+                            source: src,
+                            target: tgt,
+                            weight: 0.2 + Math.random() * 0.8
+                        });
+                    });
+                });
+            }
+
+            // Synaptic signal pulses
+            for (let i = 0; i < 28; i++) {
+                const syn = synapses[Math.floor(Math.random() * synapses.length)];
+                pulses.push({
+                    synapse: syn,
+                    progress: Math.random(),
+                    speed: 0.003 + Math.random() * 0.004,
+                    color: syn.target.color
                 });
             }
         }
 
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
+        // Floating ambient tensor mathematical glyphs
+        const mathTokens = [
+            'W ∈ ℝ^{d×k}', 'σ(Wx + b)', '∇_θ L', '∂L/∂w', 'softmax', 'z = f(x)', 'dim = 512', 'Loss: 0.014', 'ReLU(x)'
+        ];
+
+        const floaters = Array.from({ length: 14 }, (_, i) => ({
+            text: mathTokens[i % mathTokens.length],
+            x: (Math.random() - 0.5) * 800,
+            y: (Math.random() - 0.5) * 600,
+            z: Math.random() * 120 - 40,
+            speed: 0.15 + Math.random() * 0.25,
+            phase: Math.random() * Math.PI * 2,
+            opacity: 0.12 + Math.random() * 0.18
+        }));
+
+        // Render ambient loss curves in isometric background plane
+        function drawLossCurve(t) {
+            ctx.save();
+            ctx.beginPath();
+            const start3D = { x: -450, y: -250, z: -80 };
+            let p0 = projectIso(start3D.x, start3D.y, start3D.z);
+            ctx.moveTo(p0.x, p0.y);
+
+            for (let x = -450; x <= 450; x += 15) {
+                // Exponential decay curve + sine ripple (mimics training loss)
+                const normX = (x + 450) / 900;
+                const decay = Math.exp(-normX * 3.2) * 160;
+                const harmonic = Math.sin(normX * 12 + t * 1.5) * 8;
+                const y = -250 + normX * 40;
+                const z = -80 + decay + harmonic;
+                const pt = projectIso(x, y, z);
+                ctx.lineTo(pt.x, pt.y);
+            }
+
+            ctx.strokeStyle = 'rgba(34, 211, 238, 0.12)';
+            ctx.lineWidth = 1.2;
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        // Render subtle isometric tensor grid plane
+        function drawTensorGrid(t) {
+            const gridSize = 380;
+            const step = 60;
+            ctx.save();
+            ctx.lineWidth = 0.5;
+
+            // X-axis parallel lines
+            for (let y = -gridSize; y <= gridSize; y += step) {
+                const p1 = projectIso(-gridSize, y, -90);
+                const p2 = projectIso(gridSize, y, -90);
+                const alpha = (1 - Math.abs(y) / (gridSize + 40)) * 0.08;
+                ctx.strokeStyle = `rgba(99, 102, 241, ${alpha})`;
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+            }
+
+            // Y-axis parallel lines
+            for (let x = -gridSize; x <= gridSize; x += step) {
+                const p1 = projectIso(x, -gridSize, -90);
+                const p2 = projectIso(x, gridSize, -90);
+                const alpha = (1 - Math.abs(x) / (gridSize + 40)) * 0.08;
+                ctx.strokeStyle = `rgba(34, 211, 238, ${alpha})`;
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+            }
+            ctx.restore();
+        }
 
         function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            points.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
+            time += 0.012;
+            ctx.clearRect(0, 0, width, height);
 
-                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            // Layer 1: Isometric Grid Plane
+            drawTensorGrid(time);
 
-                ctx.fillStyle = 'rgba(34, 211, 238, 0.4)';
+            // Layer 2: Ambient Mathematical Loss Descent Curve
+            drawLossCurve(time);
+
+            // Layer 3: Floating Matrices & Formulas
+            ctx.save();
+            ctx.font = '11px "JetBrains Mono", monospace';
+            floaters.forEach(f => {
+                const waveY = f.y + Math.sin(time * f.speed + f.phase) * 35;
+                const waveZ = f.z + Math.cos(time * 0.4 + f.phase) * 20;
+                const pt = projectIso(f.x, waveY, waveZ);
+                const pulseAlpha = f.opacity * (0.6 + 0.4 * Math.sin(time * 1.2 + f.phase));
+                
+                ctx.fillStyle = `rgba(148, 163, 184, ${pulseAlpha})`;
+                ctx.fillText(f.text, pt.x, pt.y);
+            });
+            ctx.restore();
+
+            // Layer 4: Synaptic Tensor Connections (Lines)
+            synapses.forEach(syn => {
+                const zOffsetSrc = Math.sin(time * 1.5 + syn.source.phase) * 12;
+                const zOffsetTgt = Math.sin(time * 1.5 + syn.target.phase) * 12;
+
+                const p1 = projectIso(syn.source.baseX, syn.source.baseY, syn.source.baseZ + zOffsetSrc);
+                const p2 = projectIso(syn.target.baseX, syn.target.baseY, syn.target.baseZ + zOffsetTgt);
+
+                const grad = ctx.createLinearGradient(p1.x, p1.y, p2.x, p2.y);
+                grad.addColorStop(0, `rgba(${syn.source.color}, 0.12)`);
+                grad.addColorStop(1, `rgba(${syn.target.color}, 0.12)`);
+
+                ctx.strokeStyle = grad;
+                ctx.lineWidth = syn.weight * 1.1;
                 ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.moveTo(p1.x, p1.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+            });
+
+            // Layer 5: Dynamic Signal Pulses (Synapses Firing)
+            pulses.forEach(pulse => {
+                pulse.progress += pulse.speed;
+                if (pulse.progress >= 1) {
+                    pulse.progress = 0;
+                    // Pick another random synapse to maintain infinite loop seamlessly
+                    pulse.synapse = synapses[Math.floor(Math.random() * synapses.length)];
+                    pulse.color = pulse.synapse.target.color;
+                }
+
+                const s = pulse.synapse.source;
+                const t = pulse.synapse.target;
+                const zSrc = Math.sin(time * 1.5 + s.phase) * 12;
+                const zTgt = Math.sin(time * 1.5 + t.phase) * 12;
+
+                const curX = s.baseX + (t.baseX - s.baseX) * pulse.progress;
+                const curY = s.baseY + (t.baseY - s.baseY) * pulse.progress;
+                const curZ = (s.baseZ + zSrc) + ((t.baseZ + zTgt) - (s.baseZ + zSrc)) * pulse.progress;
+
+                const pt = projectIso(curX, curY, curZ);
+
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, 2.2, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${pulse.color}, 0.95)`;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = `rgba(${pulse.color}, 0.9)`;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            });
+
+            // Layer 6: Neural Nodes (Spheres with Depth Glow)
+            nodes.forEach(node => {
+                const zOffset = Math.sin(time * 1.5 + node.phase) * 12;
+                const pt = projectIso(node.baseX, node.baseY, node.baseZ + zOffset);
+                const pulse = 0.7 + 0.3 * Math.sin(time * 2.2 + node.phase);
+
+                // Outer ambient glow ring
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, node.radius * 2.4 * pulse, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${node.color}, 0.08)`;
                 ctx.fill();
 
-                points.forEach(p2 => {
-                    const dx = p.x - p2.x;
-                    const dy = p.y - p2.y;
-                    const dist = Math.sqrt(dx*dx + dy*dy);
-                    
-                    if (dist < minDistance) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = `rgba(34, 211, 238, ${1 - dist/minDistance * 0.6})`;
-                        ctx.lineWidth = 0.4;
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
-                    }
-                });
+                // Core Node
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, node.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${node.color}, ${0.85 * pulse})`;
+                ctx.shadowBlur = 14;
+                ctx.shadowColor = `rgba(${node.color}, 0.8)`;
+                ctx.fill();
+                ctx.shadowBlur = 0;
 
-                if (mouse.x) {
-                    const mdx = p.x - mouse.x;
-                    const mdy = p.y - mouse.y;
-                    const mdist = Math.sqrt(mdx*mdx + mdy*mdy);
-                    if (mdist < 250) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = `rgba(99, 102, 241, ${1 - mdist/250})`;
-                        ctx.lineWidth = 0.8;
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(mouse.x, mouse.y);
-                        ctx.stroke();
-                    }
-                }
+                // Center core highlight
+                ctx.beginPath();
+                ctx.arc(pt.x - 0.7, pt.y - 0.7, node.radius * 0.35, 0, Math.PI * 2);
+                ctx.fillStyle = '#ffffff';
+                ctx.fill();
             });
 
             requestAnimationFrame(animate);
         }
 
-        window.addEventListener('resize', init);
-        init();
+        window.addEventListener('resize', () => {
+            resize();
+            buildNeuralSystem();
+        });
+
+        resize();
+        buildNeuralSystem();
         animate();
     </script>
 </body>
